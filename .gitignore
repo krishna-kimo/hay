@@ -8,4 +8,4 @@ notebooks/mlruns
 notebooks/mlruns/*
 notebooks/.ipynb_checkpoints/*
 notebooks/.ipynb_chcekpoints
-
+mlruns/
