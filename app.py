@@ -21,13 +21,15 @@ logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(levelname)s %(nam
 app = Flask(__name__)
 ## util functions
 
-def init():
-    ### Model values for Reader and Document Store
-    global document_store, retriever, reader, finder
-    document_store = ElasticsearchDocumentStore(host="localhost", username="", password="", index="document")
-    retriever = ElasticsearchRetriever(document_store=document_store)
-    reader = FARMReader(model_name_or_path='deepset/roberta-base-squad2-covid', use_gpu=False)
-    finder = Finder(reader, retriever)
+#def init():
+### Model values for Reader and Document Store
+app.logger.info("Initialising the models....")
+global document_store, retriever, reader, finder
+document_store = ElasticsearchDocumentStore(host="localhost", username="", password="", index="document")
+retriever = ElasticsearchRetriever(document_store=document_store)
+reader = FARMReader(model_name_or_path='deepset/roberta-base-squad2-covid', use_gpu=False)
+finder = Finder(reader, retriever)
+app.logger.info("Model Loading done...")
 
 ## API
 
@@ -61,8 +63,8 @@ def predict():
 
 ### Main
 if __name__ == "__main__":
-    app.logger.info("Initialising the models....")
-    init()
-    app.logger.info("Model Loading done...")
+    #app.logger.info("Initialising the models....")
+    #init()
+    #app.logger.info("Model Loading done...")
     app.run(host='0.0.0.0', port=8000, debug=True, threaded=True)
 

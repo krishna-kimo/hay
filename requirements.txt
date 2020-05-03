@@ -1,0 +1,6 @@
+tensorflow
+torch
+torchvision
+Flask==1.1.2
+gunicorn==20.0.4
+farm-haystack
