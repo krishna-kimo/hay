@@ -2,4 +2,10 @@ __pycache__
 docs
 docs/*
 docs.tar.gz
+test_docs/*
+test_docs
+notebooks/mlruns
+notebooks/mlruns/*
+notebooks/.ipynb_checkpoints/*
+notebooks/.ipynb_chcekpoints
 
