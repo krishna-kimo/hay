@@ -4,7 +4,7 @@ from haystack import Finder
 from haystack.indexing.cleaning import clean_wiki_text
 from haystack.indexing.io import write_documents_to_db, fetch_archive_from_http
 from haystack.reader.farm import FARMReader
-from haystack.reader.transformers import TransformersReader
+#from haystack.reader.transformers import TransformersReader
 
 ## Document Store
 from haystack.database.elasticsearch import ElasticsearchDocumentStore
@@ -15,6 +15,7 @@ from haystack.retriever.elasticsearch import ElasticsearchRetriever
 from flask import Flask, request, Response, jsonify
 import logging
 import gunicorn
+import time
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s')
 
@@ -24,10 +25,13 @@ app = Flask(__name__)
 #def init():
 ### Model values for Reader and Document Store
 app.logger.info("Initialising the models....")
+
+
 global document_store, retriever, reader, finder
-document_store = ElasticsearchDocumentStore(host="localhost", username="", password="", index="document")
+document_store = ElasticsearchDocumentStore(host="172.17.0.1", username="", password="", index="document")
 retriever = ElasticsearchRetriever(document_store=document_store)
-reader = FARMReader(model_name_or_path='deepset/roberta-base-squad2-covid', use_gpu=False)
+#reader = FARMReader(model_name_or_path='deepset/roberta-base-squad2-covid', use_gpu=False)
+reader = FARMReader(model_name_or_path='/app/models', use_gpu=False)
 finder = Finder(reader, retriever)
 app.logger.info("Model Loading done...")
 
@@ -63,8 +67,5 @@ def predict():
 
 ### Main
 if __name__ == "__main__":
-    #app.logger.info("Initialising the models....")
-    #init()
-    #app.logger.info("Model Loading done...")
     app.run(host='0.0.0.0', port=8000, debug=True, threaded=True)
 

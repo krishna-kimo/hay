@@ -1,6 +1,18 @@
 version: "3.1"
 services:
-        nginx:
-                image: nginx:latest
+        #elasticsearch:
+        #        image: elasticsearch:7.6.2
+        #        ports:
+        #                - 9200:9200
+
+        #       environment:
+        #                - "discovery.type=single-node"
+        #        volumes:
+        #                - /home/krishna/esdata:/usr/share/elasticsearch/data
+
+        stack:
+                build: .
                 ports:
-                        - 80:80
+                        - 8000:8000
+                volumes:
+                        - /home/krishna/models:/app/models
