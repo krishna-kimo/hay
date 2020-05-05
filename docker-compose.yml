@@ -1,6 +1,20 @@
-version: "3.1"
+version: '3'
 services:
-        nginx:
-                image: nginx:latest
+        api:
+                build: .
+                #image: "deepset/covid-qa-haystack"
                 ports:
-                        - 80:80
+                        - "80:80"
+                environment:
+                        - READER_MODEL_PATH=/home/user/models/roberta
+                command: /bin/sh -c "cd /home/user && sleep 20 && uvicorn fapi:app --host 0.0.0.0 --port 80 --limit-concurrency 10 --workers 1"
+                network_mode: host
+        elastic:
+                image: "docker.elastic.co/elasticsearch/elasticsearch:7.6.2"
+                ports:
+                        - "9200:9200"
+                        - "9300:9300"
+                volumes:
+                        - /home/krishna/esdata:/usr/share/elasticsearch/data
+                environment:
+                        - discovery.type=single-node
