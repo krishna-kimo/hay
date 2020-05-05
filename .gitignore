@@ -9,3 +9,6 @@ notebooks/mlruns/*
 notebooks/.ipynb_checkpoints/*
 notebooks/.ipynb_chcekpoints
 mlruns/
+models/*
+models
+notes.md
