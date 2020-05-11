@@ -15,6 +15,7 @@ services:
                         - "9200:9200"
                         - "9300:9300"
                 volumes:
-                        - /home/krishna/esdata:/usr/share/elasticsearch/data
+                        #- /home/krishna/esdata:/usr/share/elasticsearch/data
+                        - /home/nkdeepak/esdata:/usr/share/elasticsearch/data
                 environment:
                         - discovery.type=single-node
