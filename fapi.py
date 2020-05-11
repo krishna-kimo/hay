@@ -14,6 +14,7 @@ from haystack.retriever.elasticsearch import ElasticsearchRetriever
 from config import DB_HOST, DB_USER, DB_PW, DB_INDEX
 from config import READER_MODEL_PATH
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 import logging
@@ -22,6 +23,21 @@ logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(levelname)s %(nam
 
 
 app = FastAPI()
+
+### Configuring CORS
+origins = [
+        "https://www.kimo.ai",
+        "http://www.kimo.ai"
+        ]
+
+app.add_middleware(
+        CORSMiddleware,
+        allow_origins=origins,
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"]
+        )
+
 ### Model values for Reader and Document Store
 global document_store, retriever, reader, finder
 document_store = ElasticsearchDocumentStore(host=DB_HOST, username=DB_USER, password=DB_PW, index=DB_INDEX)
